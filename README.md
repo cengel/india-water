@@ -9,7 +9,7 @@ Details about data: https://storage.cloud.google.com/global-surface-water/downlo
 
 # Process
 
-## download:
+### download
 https://storage.googleapis.com/global-surface-water/downloads2/seasonality/seasonality_70E_10N_v1_1.tif
 https://storage.googleapis.com/global-surface-water/downloads2/seasonality/seasonality_70E_20N_v1_1.tif
 https://storage.googleapis.com/global-surface-water/downloads2/seasonality/seasonality_70E_30N_v1_1.tif
@@ -17,14 +17,17 @@ https://storage.googleapis.com/global-surface-water/downloads2/seasonality/seaso
 https://storage.googleapis.com/global-surface-water/downloads2/seasonality/seasonality_80E_30N_v1_1.tif
 
 
-## merge 
+### combine tiles 
 `gdal_merge.py -init "255" -o season_merge.tif seasonality*`
 
-## extract pixels of interst (i.e. seasonality == 12, i.e. water year-round)
+### extract pixels of interest 
+(seasonality is 12, i.e. water year-round)
+
 `gdal_calc.py -A season_merge.tif --outfile=permWater.tif --calc="A==12" --NoDataValue=0`
 
 ## vectorize
-`mkdir permWater`
+
+`mkdir permWater`  
 `gdal_polygonize.py permWater.tif permWater/permWater.shp -b 1 -f "ESRI Shapefile" permanent water`
 
 ## post processing
